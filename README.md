@@ -1,4 +1,42 @@
 # Innovision
+## Setup 
+
+### Databases
+#### 1. Graph database
+Our RAG-based decision makers use Neo4j as a tool to access Labeled Property Graph (LPG) data in DQA benchmark.
+Therefore, you should prepare Neo4j with the following commands and instructions:
+```bash
+# Ubuntu
+sudo apt update
+sudo apt install apt-transport-https ca-certificates curl software-properties-common
+sudo curl -fsSL https://debian.neo4j.com/neotechnology.gpg.key | sudo apt-key add -
+sudo add-apt-repository "deb https://debian.neo4j.com stable 4.1"
+sudo apt install neo4j-enterprise
+sudo apt install cypher-shell
+
+# Login with the default user/password 'neo4j'/'neo4j'.
+cypher-shell -u neo4j
+# Then, change to a new password and enter ':exit' to return to the terminal.
+```
+#### 2. Relational database
+For relational data in DQA benchmark, you should prepare MySQL with the following commands and instructions:
+```bash
+# Ubuntu
+wget https://dev.mysql.com/get/mysql-apt-config_0.8.14-1_all.deb
+sudo dpkg -i mysql-apt-config_0.8.14-1_all.deb
+# Then, select 'OK' to proceed to the next step.
+sudo apt update
+sudo apt install -y mysql-server
+
+# Login with root user to create the default database 'DQA_rdb'.
+sudo mysql -u root
+mysql> CREATE DATABASE DQA_rdb;
+# (Optional) Make MySQL accessible without sudo privilege in the Python environment.
+mysql> USE mysql;
+mysql> update user set plugin='mysql_native_password' where user='root';
+mysql> flush privileges;
+# Then, enter ':exit' to return to the terminal.
+```
 
 ### Configuration
 Please fill the values in "config.json" file with database connection information and your API key you want to use.
