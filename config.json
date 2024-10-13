@@ -1,0 +1,13 @@
+{
+    "OPENAI_API_KEY": "sk-PHQ-nohYHhYUmPgMyjcgsYGtuaxRdtLIAmkbkDurTgT3BlbkFJbEiYeF_5US1MLa_t6K7WreFLO1tUTtvwbJjX7AZ9EA",
+    "NEO4J": {
+        "HOST": "bolt://localhost:7687",
+        "USER": "neo4j",
+        "PASSWORD": "neo"
+    },
+    "MYSQL": {
+        "HOST": "localhost",
+        "USER": "root",
+        "PASSWORD": ""
+    }
+}

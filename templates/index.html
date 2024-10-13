@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LLM RAG Business Decision Tool</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+</head>
+<body class="dark-mode">
+    <div class="container">
+        <button id="darkModeToggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+        <h1>LLM RAG Business Decision Tool</h1>
+        <div class="content">
+            <div class="form-container">
+                <form id="decisionForm">
+                    <label for="scenario">Scenario</label>
+                    <select id="scenario" name="scenario">
+                        <option value="locating">Locating</option>
+                        <option value="building">Building</option>
+                    </select>
+
+                    <label for="database">Database</label>
+                    <select id="database" name="database">
+                        <option value="graph">Graph</option>
+                        <option value="relational">Relational</option>
+                    </select>
+
+                    <label for="model">Model</label>
+                    <select id="model" name="model">
+                        <option value="gpt-3.5-turbo-0125">GPT-3.5-Turbo-0125</option>
+                        <option value="gpt-4">GPT-4</option>
+                    </select>
+
+                    <label for="question_num">Question Number</label>
+                    <input type="number" id="question_num" name="question_num" min="1" max="200" value="1">
+
+                    <div class="buttons">
+                        
+                        <button type="button" onclick="showPrevious()">Show Previous</button>
+                        <button type="button" onclick="runTask()">Run Task</button>
+                    </div>
+                    
+                </form>
+
+            </div>
+
+            <div id="output" class="output"></div>
+        </div>
+    </div>
+
+    <script>
+        const socket = io();
+        let previousQuestions = JSON.parse(localStorage.getItem('previousQuestions')) || [];
+
+        function runTask() {
+            const scenario = document.getElementById('scenario').value;
+            const database = document.getElementById('database').value;
+            const question_num = document.getElementById('question_num').value;
+            const model = document.getElementById('model').value;
+
+            const formData = {
+                scenario: scenario,
+                database: database,
+                question_num: question_num,
+                model: model
+            };
+
+            document.getElementById('output').innerHTML = ""; // Clear previous output
+
+            previousQuestions.push({ ...formData, output: '' }); // Store previous question data
+            socket.emit('run_task', formData);
+        }
+
+        // Show previous questions
+        function showPrevious() {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = ""; // Clear current output
+            previousQuestions.forEach((question, index) => {
+                outputDiv.innerHTML += `<div class="previous-question">
+                    <strong>Previous Question ${index + 1}:</strong><br>
+                    Scenario: ${question.scenario}<br>
+                    Database: ${question.database}<br>
+                    Question Number: ${question.question_num}<br>
+                    Model: ${question.model}<br>
+                    Output: ${question.output || 'No output yet.'}<br>
+                    <hr>
+                </div>`;
+            });
+            outputDiv.scrollTop = outputDiv.scrollHeight; // Auto-scroll to the bottom
+        }
+
+        // Listen for the output from the WebSocket
+        socket.on('task_output', function(data) {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML += `<div class="task-output">${data.output}</div>`;
+            outputDiv.scrollTop = outputDiv.scrollHeight; // Auto-scroll to the bottom
+
+            // Update the last question's output
+            if (previousQuestions.length > 0) {
+                previousQuestions[previousQuestions.length - 1].output = data.output;
+                localStorage.setItem('previousQuestions', JSON.stringify(previousQuestions)); // Store in local storage
+            }
+        });
+
+        // Toggle dark mode
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle("dark-mode");
+        }
+    </script>
+</body>
+</html>

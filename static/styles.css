@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Full height */
+    overflow: hidden; /* Prevent scrolling */
+}
+
+.container {
+    height: 100%; /* Full height */
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #4CAF50;
+    margin-bottom: 30px;
+}
+
+.content {
+    display: flex;
+    gap: 20px;
+    flex: 1; /* Take up available space */
+}
+
+.form-container {
+    flex: 1; /* Take up available space */
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 15px;
+}
+
+label {
+    font-weight: bold;
+}
+
+select, input[type="number"], button {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.output {
+    max-height: 550px; /* Set a maximum height for the output section */
+    overflow-y: auto; /* Enable vertical scrolling */
+    border: 1px solid #ccc; /* Optional: Add a border for better visibility */
+    padding: 10px; /* Optional: Add some padding */
+    background-color: #f9f9f9;
+    flex:2; /* Optional: Set a background color */
+}
+
+.task-output {
+    margin-bottom: 10px; /* Optional: Space between output messages */
+}
+
+.previous-question {
+    margin-bottom: 15px; /* Optional: Space between previous questions */
+}
+
+/* Dark mode styles */
+.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode .container {
+    background-color: #444;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.dark-mode .output {
+    background-color: #555;
+    border: 1px solid #777;
+}
+
+.dark-mode .previous-question {
+    background-color: #666;
+}
+
+.dark-mode .task-output {
+    background-color: #5a7f5e;
+}
+
+.dark-mode-toggle {
+    position: fixed; /* Position relative to the viewport */
+    top: 10px; /* Distance from the top of the page */
+    right: 10px; /* Distance from the right of the page */
+    padding: 10px 15px; /* Adjusted padding for better size */
+    background-color: #33b33f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    z-index: 1000; /* Ensures it's on top of other content */
+}
+
+.dark-mode-toggle:hover {
+    background-color: #28a428;
+}

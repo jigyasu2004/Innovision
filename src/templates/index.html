@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager Output</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        #output {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Manager Output</h1>
+    <div id="output">Press the button to run the task.</div>
+    <br/>
+    <button onclick="runTask()">Run Task</button>
+
+    <script>
+        function runTask() {
+            fetch('/run_task', { method: 'POST' })
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('output').textContent = data;
+                });
+        }
+    </script>
+</body>
+</html>
