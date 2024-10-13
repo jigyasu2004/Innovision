@@ -3,8 +3,6 @@
 
 ### Databases
 #### 1. Graph database
-Our RAG-based decision makers use Neo4j as a tool to access Labeled Property Graph (LPG) data in DQA benchmark.
-Therefore, you should prepare Neo4j with the following commands and instructions:
 ```bash
 # Ubuntu
 sudo apt update
@@ -16,7 +14,6 @@ sudo apt install cypher-shell
 cypher-shell -u neo4j
 ```
 #### 2. Relational database
-For relational data in DQA benchmark, you should prepare MySQL with the following commands and instructions:
 ```bash
 # Ubuntu
 wget https://dev.mysql.com/get/mysql-apt-config_0.8.14-1_all.deb
